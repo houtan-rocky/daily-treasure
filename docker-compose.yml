@@ -17,20 +17,6 @@ services:
       timeout: 10s
       retries: 3
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80"
-    depends_on:
-      backend:
-        condition: service_healthy
-      envoy:
-        condition: service_started
-    networks:
-      - treasure_network
-
   envoy:
     build:
       context: ./envoy
