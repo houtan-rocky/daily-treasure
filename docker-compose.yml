@@ -1,5 +1,4 @@
 version: '3.3'
-
 services:
   backend:
     build:
@@ -16,7 +15,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-
   envoy:
     build:
       context: ./envoy
@@ -25,8 +23,7 @@ services:
       - "8080:8080"
       - "9901:9901"
     depends_on:
-      backend:
-        condition: service_healthy
+      - backend
     networks:
       - treasure_network
     restart: unless-stopped
@@ -36,7 +33,6 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-
 networks:
   treasure_network:
     driver: bridge
