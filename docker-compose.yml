@@ -37,7 +37,8 @@ services:
       - DOMAIN=dailytreasure.frontgram.com
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/ssl:/etc/ssl/certs
+      - ./nginx/private:/etc/ssl/private
 networks:
   treasure_network:
     driver: bridge
