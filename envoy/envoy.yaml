@@ -1,18 +1,3 @@
-transport_socket: 
-  name: envoy.transport_sockets.tls
-  typed_config:
-    "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
-    common_tls_context:
-      tls_certificates:
-        - certificate_chain:
-            filename: /etc/letsencrypt/frontgram.com_ecc/fullchain.cer
-          private_key:
-            filename: /etc/letsencrypt/frontgram.com_ecc/frontgram.com.key
-      validation_context:
-        trusted_ca:
-          filename: /etc/letsencrypt/frontgram.com_ecc/fullchain.cer
-      server_name: frontgram.com
-
 admin:
   access_log_path: /tmp/admin_access.log
   address:
@@ -37,7 +22,7 @@ static_resources:
                 validation_context:
                   trusted_ca:
                     filename: /etc/letsencrypt/frontgram.com_ecc/fullchain.cer
-                server_name: frontgram.com
+                sni: frontgram.com
           filters:
             - name: envoy.filters.network.http_connection_manager
               typed_config:
