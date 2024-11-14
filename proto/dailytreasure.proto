@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package dailytreasure;
+option go_package = "github.com/yourusername/daily-treasure/proto";
+
+service DailyTreasure {
+  // Stream to send rover position and receive game state updates
+  rpc UpdatePosition (Position) returns (GameState);
+  
+  // Get initial game configuration
+  rpc GetGameConfig (Empty) returns (GameConfig);
+}
+
+message Empty {}
+
+message Position {
+  double x = 1;
+  double y = 2;
+}
+
+message GameConfig {
+  double target_zone_diameter = 1;
+  double win_zone_diameter = 2;
+  // These coordinates will be randomly generated on server start
+  double target_zone_x = 3;
+  double target_zone_y = 4;
+  double win_zone_x = 5;
+  double win_zone_y = 6;
+}
+
+message GameState {
+  enum ZoneStatus {
+    OUTSIDE = 0;
+    IN_TARGET_ZONE = 1;
+    IN_WIN_ZONE = 2;
+  }
+  ZoneStatus status = 1;
+  // Distance to target zone center (only sent when outside both zones)
+  optional double target_distance = 2;
+  // Whether the game is won
+  bool won = 3;
+}
