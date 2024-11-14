@@ -7,7 +7,7 @@ static_resources:
   listeners:
     - name: listener_0
       address:
-        socket_address: { address: 0.0.0.0, port_value: 8080 }
+        socket_address: { address: 0.0.0.0, port_value: 80 }
       filter_chains:
         - transport_socket:
             name: envoy.transport_sockets.tls
@@ -16,13 +16,13 @@ static_resources:
               common_tls_context:
                 tls_certificates:
                   - certificate_chain:
-                      filename: /etc/letsencrypt/frontgram.com_ecc/fullchain.cer
+                      filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/fullchain.pem
                     private_key:
-                      filename: /etc/letsencrypt/frontgram.com_ecc/frontgram.com.key
+                      filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/privkey.pem
                 validation_context:
                   trusted_ca:
-                    filename: /etc/letsencrypt/frontgram.com_ecc/fullchain.cer
-                sni: frontgram.com
+                    filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/fullchain.pem
+                sni: dailytreasure.frontgram.com
           filters:
             - name: envoy.filters.network.http_connection_manager
               typed_config:
@@ -33,7 +33,7 @@ static_resources:
                   name: local_route
                   virtual_hosts:
                     - name: local_service
-                      domains: ["*"]
+                      domains: ["dailytreasure.frontgram.com"]
                       routes:
                         - match: { prefix: "/" }
                           route:
