@@ -20,8 +20,8 @@ services:
       context: ./envoy
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
-      - "9901:9901"
+      - "80:80"
+      - "443:443"
     depends_on:
       - backend
     networks:
@@ -33,6 +33,11 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    environment:
+      - DOMAIN=dailytreasure.frontgram.com
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
 networks:
   treasure_network:
     driver: bridge
