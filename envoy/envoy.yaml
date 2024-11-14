@@ -16,12 +16,12 @@ static_resources:
               common_tls_context:
                 tls_certificates:
                   - certificate_chain:
-                      filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/fullchain.pem
+                      filename: /etc/ssl/certs/frontgram.com.crt
                     private_key:
-                      filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/privkey.pem
+                      filename: /etc/ssl/private/frontgram.com.key
                 validation_context:
                   trusted_ca:
-                    filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/fullchain.pem
+                    filename: /etc/ssl/certs/ca_bundle.crt
           filters:
             - name: envoy.filters.network.http_connection_manager
               typed_config:
