@@ -9,6 +9,13 @@ services:
       - "50051:50051"
     environment:
       - PORT=50051
+    networks:
+      - treasure_network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "50051"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   frontend:
     build:
@@ -17,8 +24,12 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - backend
-      - envoy
+      backend:
+        condition: service_healthy
+      envoy:
+        condition: service_started
+    networks:
+      - treasure_network
 
   envoy:
     build:
@@ -28,4 +39,18 @@ services:
       - "8080:8080"
       - "9901:9901"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+    networks:
+      - treasure_network
+    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+networks:
+  treasure_network:
+    driver: bridge
