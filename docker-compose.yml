@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      - PORT=50051
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+      - envoy
+
+  envoy:
+    build:
+      context: ./envoy
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9901:9901"
+    depends_on:
+      - backend

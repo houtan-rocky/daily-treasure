@@ -1,6 +1,6 @@
 module github.com/houtan-rocky/daily-treasure
 
-go 1.23.1
+go 1.21
 
 require (
 	google.golang.org/grpc v1.68.0
