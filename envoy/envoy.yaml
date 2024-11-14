@@ -22,12 +22,10 @@ static_resources:
                 validation_context:
                   trusted_ca:
                     filename: /etc/letsencrypt/live/dailytreasure.frontgram.com/fullchain.pem
-                sni: dailytreasure.frontgram.com
           filters:
             - name: envoy.filters.network.http_connection_manager
               typed_config:
                 "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-                codec_type: auto
                 stat_prefix: ingress_http
                 route_config:
                   name: local_route
