@@ -4,7 +4,14 @@ FROM golang:1.21-alpine AS builder
 WORKDIR /app
 
 # Install necessary build tools
-RUN apk add --no-cache git protoc
+RUN apk add --no-cache git protoc protobuf-dev
+
+# Install protoc-gen-go and protoc-gen-go-grpc
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28 && \
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+
+# Make sure the protoc plugins are in PATH
+ENV PATH="$PATH:$(go env GOPATH)/bin"
 
 # Copy go mod files
 COPY go.mod go.sum ./
