@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  backend:
+  treasure_service:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -22,7 +22,7 @@ services:
     ports:
       - '8000:8000'
     depends_on:
-      - backend
+      - treasure_service
     networks:
       - treasure_network
     restart: unless-stopped
