@@ -15,15 +15,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-
   envoy:
     build:
       context: ./envoy
       dockerfile: Dockerfile
     ports:
-      - '80:80'
-      - '443:443'
-      - '9901:9901'
+      - '8000:8000'
     depends_on:
       - backend
     networks:
@@ -35,17 +32,8 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-    environment:
-      - DOMAIN=frontgram.com
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./certs:/etc/ssl/certs:ro
-      - ./private:/etc/ssl/private:ro
-      # OR use absolute paths if the files are in system locations:
-      # - /etc/letsencrypt/live/frontgram.com/fullchain.pem:/etc/ssl/certs/frontgram.com.crt:ro
-      # - /etc/letsencrypt/live/frontgram.com/privkey.pem:/etc/ssl/private/frontgram.com.key:ro
-      # - /etc/letsencrypt/live/frontgram.com/chain.pem:/etc/ssl/certs/ca_bundle.crt:ro
-
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
 networks:
   treasure_network:
     driver: bridge
