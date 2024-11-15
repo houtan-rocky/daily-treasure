@@ -11,7 +11,7 @@ services:
     networks:
       - treasure_network
     healthcheck:
-      test: ['CMD', 'nc', '-z', 'localhost', '50051']
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 50051 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -30,7 +30,7 @@ services:
       restart_policy:
         condition: on-failure
         delay: 5s
-        max_attempts: 3
+        max_attempts: 5
         window: 120s
     volumes:
       - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml

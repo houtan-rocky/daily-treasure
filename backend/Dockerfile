@@ -4,7 +4,7 @@ FROM golang:1.21-alpine AS builder
 WORKDIR /app
 
 # Install necessary build tools
-RUN apk add --no-cache git protoc protobuf-dev
+RUN apk add --no-cache git protoc protobuf-dev netcat-openbsd
 
 # Install protoc-gen-go and protoc-gen-go-grpc
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28 && \
@@ -21,6 +21,9 @@ RUN go mod download
 
 # Copy the source code
 COPY . .
+
+# Create proto output directory
+RUN mkdir -p proto
 
 # Generate protobuf files
 RUN protoc -I=proto \
