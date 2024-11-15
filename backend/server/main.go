@@ -16,6 +16,7 @@ import (
 	pb "github.com/houtan-rocky/daily-treasure/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -215,9 +216,14 @@ func main() {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
+	
+
 	gameServer := NewGameServer()
 	grpcServer := setupGrpcServer()
 	pb.RegisterDailyTreasureServer(grpcServer, gameServer)
+	reflection.Register(grpcServer)
+
+
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
