@@ -25,6 +25,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "9901:9901"
     depends_on:
       - backend
     networks:
@@ -39,7 +40,6 @@ services:
     environment:
       - DOMAIN=frontgram.com
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
       - /etc/ssl/certs:/etc/ssl/certs
       - /etc/ssl/private:/etc/ssl/private
 
