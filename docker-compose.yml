@@ -40,8 +40,8 @@ services:
     environment:
       - DOMAIN=frontgram.com
     volumes:
-      - /etc/ssl/custom/certs:/etc/ssl/certs
-      - /etc/ssl/custom/private:/etc/ssl/private
+      - /etc/ssl/certs:/etc/ssl/custom/certs
+      - /etc/ssl/private:/etc/ssl/custom/private
 
 networks:
   treasure_network:
