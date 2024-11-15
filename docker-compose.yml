@@ -1,5 +1,7 @@
 version: '3.3'
+
 services:
+
   backend:
     build:
       context: ./backend
@@ -15,6 +17,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
   envoy:
     build:
       context: ./envoy
@@ -34,11 +37,12 @@ services:
         max_attempts: 3
         window: 120s
     environment:
-      - DOMAIN=dailytreasure.frontgram.com
+      - DOMAIN=frontgram.com
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/ssl:/etc/ssl/certs
-      - ./nginx/private:/etc/ssl/private
+      - /etc/ssl/certs:/etc/ssl/certs
+      - /etc/ssl/private:/etc/ssl/private
+
 networks:
   treasure_network:
     driver: bridge
