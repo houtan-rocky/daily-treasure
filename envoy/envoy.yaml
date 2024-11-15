@@ -9,19 +9,19 @@ static_resources:
       address:
         socket_address: { address: 0.0.0.0, port_value: 80 }
       filter_chains:
-        - transport_socket:
-            name: envoy.transport_sockets.tls
-            typed_config:
-              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
-              common_tls_context:
-                tls_certificates:
-                  - certificate_chain:
-                      filename: /etc/ssl/certs/frontgram.com.crt
-                    private_key:
-                      filename: /etc/ssl/private/frontgram.com.key
-                validation_context:
-                  trusted_ca:
-                    filename: /etc/ssl/certs/ca_bundle.crt
+        # - transport_socket:
+        #     name: envoy.transport_sockets.tls
+        #     typed_config:
+        #       "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+        #       common_tls_context:
+        #         tls_certificates:
+        #           - certificate_chain:
+        #               filename: /etc/ssl/certs/frontgram.com.crt
+        #             private_key:
+        #               filename: /etc/ssl/private/frontgram.com.key
+        #         validation_context:
+        #           trusted_ca:
+        #             filename: /etc/ssl/certs/ca_bundle.crt
           filters:
             - name: envoy.filters.network.http_connection_manager
               typed_config:
