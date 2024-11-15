@@ -1,19 +1,17 @@
 version: '3.3'
-
 services:
-
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "50051:50051"
+      - '50051:50051'
     environment:
       - PORT=50051
     networks:
       - treasure_network
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "50051"]
+      test: ['CMD', 'nc', '-z', 'localhost', '50051']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -23,9 +21,9 @@ services:
       context: ./envoy
       dockerfile: Dockerfile
     ports:
-      - "80:80"
-      - "443:443"
-      - "9901:9901"
+      - '80:80'
+      - '443:443'
+      - '9901:9901'
     depends_on:
       - backend
     networks:
@@ -40,9 +38,13 @@ services:
     environment:
       - DOMAIN=frontgram.com
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - /etc/ssl/certs:/etc/ssl/certs
-      - /etc/ssl/private:/etc/ssl/private
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./certs:/etc/ssl/certs:ro
+      - ./private:/etc/ssl/private:ro
+      # OR use absolute paths if the files are in system locations:
+      # - /etc/letsencrypt/live/frontgram.com/fullchain.pem:/etc/ssl/certs/frontgram.com.crt:ro
+      # - /etc/letsencrypt/live/frontgram.com/privkey.pem:/etc/ssl/private/frontgram.com.key:ro
+      # - /etc/letsencrypt/live/frontgram.com/chain.pem:/etc/ssl/certs/ca_bundle.crt:ro
 
 networks:
   treasure_network:

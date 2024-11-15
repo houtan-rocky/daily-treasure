@@ -2,7 +2,6 @@ admin:
   access_log_path: /tmp/admin_access.log
   address:
     socket_address: { address: 0.0.0.0, port_value: 9901 }
-
 static_resources:
   listeners:
     - name: listener_0
@@ -31,7 +30,7 @@ static_resources:
                   name: local_route
                   virtual_hosts:
                     - name: local_service
-                      domains: ["dailytreasure.frontgram.com"]
+                      domains: ["*"]  # Changed to accept all domains
                       routes:
                         - match: { prefix: "/" }
                           route:
@@ -69,6 +68,5 @@ static_resources:
             - endpoint:
                 address:
                   socket_address:
-                    address: host.docker.internal  # Use this for Docker on Mac/Windows
-                    # address: localhost  # Use this for running directly on Linux
+                    address: host.docker.internal
                     port_value: 50051
